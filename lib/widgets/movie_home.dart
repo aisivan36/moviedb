@@ -17,7 +17,7 @@ class MoviePage extends StatefulWidget {
 }
 
 class _MoviePageState extends State<MoviePage> {
-  final CarouselController _carouselController = CarouselController();
+  final CarouselController carouselController = CarouselController();
 
   int current = 0;
 
@@ -115,17 +115,24 @@ class _MoviePageState extends State<MoviePage> {
             child: DelayedDisplay(
               delay: const Duration(microseconds: 800),
               child: CarouselSlider(
+                carouselController: carouselController,
                 options: CarouselOptions(
-                  height: positionHeight,
-                  //  aspectRatio: 16/ 9,
-                  viewportFraction: 0.85,
-                ),
+                    // autoPlay: true,
+                    height: positionHeight,
+                    //  aspectRatio: 16/ 9,
+                    viewportFraction: 0.77,
+                    enlargeCenterPage: true,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        current = index;
+                      });
+                    }),
                 items: widget.movies
                     .map(
                       (dataMovie) => Builder(
                         builder: (context) => InkWell(
                           onTap: () {
-                            //TODO pushNewScreen
+                            //TODO pushNewScreen MovieDetailScreen
                           },
                           child: Container(
                             width: widths,
@@ -134,21 +141,23 @@ class _MoviePageState extends State<MoviePage> {
                               borderRadius: BorderRadius.circular(19.39),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 8.0, bottom: 11.50),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 12.0),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
                                     clipBehavior: Clip.hardEdge,
+                                    // margin:
+                                    //     const EdgeInsets.symmetric(horizontal: 5),
                                     decoration: BoxDecoration(
-                                      boxShadow: kElevationToShadow[12345678],
+                                      boxShadow: kElevationToShadow[8],
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: DelayedDisplay(
-                                      delay: const Duration(microseconds: 800),
+                                      delay: const Duration(milliseconds: 800),
                                       slidingBeginOffset:
-                                          const Offset(0.0, -0.01),
+                                          const Offset(17.0, -3.01),
                                       child: ClipRRect(
                                         /// BorderRadius on the card
                                         borderRadius: BorderRadius.circular(10),
@@ -160,17 +169,17 @@ class _MoviePageState extends State<MoviePage> {
                                                   .height *
                                               0.38 *
                                               0.6,
-                                          fit: BoxFit.cover,
                                           progressIndicatorBuilder: (context,
                                                   url, downloadProgress) =>
                                               Container(
                                             color: Colors.grey,
                                           ),
+                                          fit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 19.1),
+                                  const SizedBox(height: 20),
                                   if (current ==
                                       widget.movies.indexOf(dataMovie))
                                     DelayedDisplay(
@@ -185,24 +194,27 @@ class _MoviePageState extends State<MoviePage> {
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                           overflow: TextOverflow.ellipsis,
-                                          fontSize: 18.1,
+                                          fontSize: 18.0,
                                         ),
                                       ),
                                     ),
                                   const SizedBox(height: 6.0),
                                   if (current ==
                                       widget.movies.indexOf(dataMovie))
-                                    DelayedDisplay(
-                                      delay: const Duration(microseconds: 800),
-                                      slidingBeginOffset:
-                                          const Offset(0.0, -0.10),
-                                      child: Text(
-                                        dataMovie.releaseDate,
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        style: normalText.copyWith(
-                                          color: Colors.white60,
-                                          fontSize: 16.0,
+                                    Expanded(
+                                      child: DelayedDisplay(
+                                        delay:
+                                            const Duration(microseconds: 500),
+                                        slidingBeginOffset:
+                                            const Offset(-10.0, 0.10),
+                                        child: Text(
+                                          dataMovie.releaseDate,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          style: normalText.copyWith(
+                                            color: Colors.white60,
+                                            fontSize: 16.0,
+                                          ),
                                         ),
                                       ),
                                     ),
