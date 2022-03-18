@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_db/animation.dart';
 import 'package:movie_db/constants/theme.dart';
 import 'package:movie_db/models/movies/movie_model.dart';
 
@@ -29,6 +30,7 @@ class _MoviePageState extends State<MoviePage> {
       height: heights,
       child: Stack(
         children: [
+          /// Background blur image on every each
           CachedNetworkImage(
             imageUrl: widget.movies[current].backdrop,
             fit: BoxFit.cover,
@@ -41,39 +43,36 @@ class _MoviePageState extends State<MoviePage> {
                 child: Container(
                   height: heights,
                   width: widths,
-                  color: Colors.black.withOpacity(0.5),
-                  alignment: Alignment.topLeft,
+                  color: const Color.fromARGB(61, 0, 0, 0),
+                  // color: Colors.black.withOpacity(0.5),
+                  alignment: Alignment.topCenter,
                   child: SafeArea(
                     /// MovieDB title
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 50, right: 50, top: 9, bottom: 9),
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 50, right: 50, top: 9, bottom: 9),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.only(top: 1.0, bottom: 1.0),
-                            child: Text(
-                              'MovieDB',
-                              style: heading.copyWith(
-                                color: Theme.of(context).primaryColor,
-                              ),
+                          padding: const EdgeInsets.only(top: 1.0, bottom: 1.0),
+                          child: Text(
+                            'MovieDB',
+                            style: heading.copyWith(
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(13),
-                              bottomRight: Radius.circular(13)),
-                          color: Color.fromARGB(134, 20, 199, 44),
-                          // border: Border(
-                          //   bottom: BorderSide(
-                          //     color: Colors.grey,
-                          //     width: 0.6,
-                          //   ),
-                          // ),
-                        ),
+                      ),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(13),
+                            bottomRight: Radius.circular(13)),
+                        color: Color.fromARGB(134, 20, 199, 44),
+                        // border: Border(
+                        //   bottom: BorderSide(
+                        //     color: Colors.grey,
+                        //     width: 0.6,
+                        //   ),
+                        // ),
                       ),
                     ),
                     //
@@ -110,14 +109,114 @@ class _MoviePageState extends State<MoviePage> {
             ),
           ),
           Positioned(
-              bottom: 0,
-              height: positionHeight,
-              width: widths,
-              // TODO DelayedDisplay
-              child: Text(
-                'Test',
-                style: TextStyle(color: Colors.white),
-              )),
+            bottom: 0,
+            height: positionHeight,
+            width: widths,
+            child: DelayedDisplay(
+              delay: const Duration(microseconds: 800),
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: positionHeight,
+                  //  aspectRatio: 16/ 9,
+                  viewportFraction: 0.85,
+                ),
+                items: widget.movies
+                    .map(
+                      (dataMovie) => Builder(
+                        builder: (context) => InkWell(
+                          onTap: () {
+                            //TODO pushNewScreen
+                          },
+                          child: Container(
+                            width: widths,
+                            // color: Colors.white,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(19.39),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, bottom: 11.50),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                      boxShadow: kElevationToShadow[12345678],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: DelayedDisplay(
+                                      delay: const Duration(microseconds: 800),
+                                      slidingBeginOffset:
+                                          const Offset(0.0, -0.01),
+                                      child: ClipRRect(
+                                        /// BorderRadius on the card
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: CachedNetworkImage(
+                                          imageUrl: dataMovie.backdrop,
+                                          width: double.infinity,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.38 *
+                                              0.6,
+                                          fit: BoxFit.cover,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Container(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 19.1),
+                                  if (current ==
+                                      widget.movies.indexOf(dataMovie))
+                                    DelayedDisplay(
+                                      delay: const Duration(microseconds: 800),
+                                      slidingBeginOffset:
+                                          const Offset(0.0, -0.10),
+                                      child: Text(
+                                        dataMovie.title,
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          overflow: TextOverflow.ellipsis,
+                                          fontSize: 18.1,
+                                        ),
+                                      ),
+                                    ),
+                                  const SizedBox(height: 6.0),
+                                  if (current ==
+                                      widget.movies.indexOf(dataMovie))
+                                    DelayedDisplay(
+                                      delay: const Duration(microseconds: 800),
+                                      slidingBeginOffset:
+                                          const Offset(0.0, -0.10),
+                                      child: Text(
+                                        dataMovie.releaseDate,
+                                        maxLines: 2,
+                                        textAlign: TextAlign.center,
+                                        style: normalText.copyWith(
+                                          color: Colors.white60,
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ),
         ],
       ),
     );
