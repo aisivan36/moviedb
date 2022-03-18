@@ -21,13 +21,13 @@ class TvModel {
   });
 
   factory TvModel.fromJson(Map<String, dynamic> json) {
-    var string = "Not Available";
-    getString() {
+    String string = "Not Available";
+    void getString() {
       try {
         string =
             "${monthgenrater(json['first_air_date'].split("-")[1])} ${json['first_air_date'].split("-")[2]}, ${json['first_air_date'].split("-")[0]}";
       } catch (e) {
-        printLog(level: LogLevel.error, error: e, message: 'TV MODEL: ');
+        printLog(level: LogLevel.error, error: e, message: 'TV MODEL:');
       }
     }
 
