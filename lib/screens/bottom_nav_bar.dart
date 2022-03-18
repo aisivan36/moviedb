@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_db/helpers/debug_mode.dart';
 import 'package:movie_db/screens/home/home_screen.dart';
-import 'package:uni_links/uni_links.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);
