@@ -34,7 +34,8 @@ void printLog(
     case LogLevel.error:
       return dev.log('⚠️\x1B[31m$message:\x1B[0m',
           name: name, error: error, stackTrace: stackTrace);
-// if level null log success color
+
+    /// if level null log success color
     default:
       dev.log('\x1B[32m$message:\x1B[0m',
           name: name, error: error, stackTrace: stackTrace);

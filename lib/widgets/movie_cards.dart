@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import 'package:movie_db/constants/theme.dart';
 
 class MovieCard extends StatelessWidget {
@@ -82,5 +83,33 @@ class MovieCard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Horizontal Movie Card
+class HorizontalMovieCard extends StatelessWidget {
+  const HorizontalMovieCard({
+    Key? key,
+    required this.poster,
+    required this.name,
+    required this.backdrop,
+    required this.date,
+    required this.rate,
+    required this.id,
+    required this.color,
+    this.isMovie = false,
+  }) : super(key: key);
+  final String poster;
+  final String name;
+  final String backdrop;
+  final String date;
+  final double rate;
+  final String id;
+  final Color color;
+  final bool isMovie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

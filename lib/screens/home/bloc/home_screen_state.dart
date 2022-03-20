@@ -45,4 +45,7 @@ class HomeScreenError extends HomeScreenState {
   final FetchDataError error;
 
   const HomeScreenError({required this.error});
+
+  @override
+  List<Object> get props => [error];
 }

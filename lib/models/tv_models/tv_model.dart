@@ -23,10 +23,10 @@ class TvModel {
   factory TvModel.fromJson(Map<String, dynamic> json) {
     String string = "Not Available";
     // print('first $string');
-    void getString() {
+    Future<void> getString() async {
       try {
         string =
-            "${monthgenrater(json['first_air_date']?.split("-")[1])} ${json['first_air_date']?.split("-")[2]}, ${json['first_air_date']?.split("-")[0]}";
+            "${monthgenrater(await json['first_air_date'].split("-")[1])} ${await json['first_air_date'].split("-")[2]}, ${await json['first_air_date'].split("-")[0]}";
 
         // print('Second $string');
       } catch (e) {

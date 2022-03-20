@@ -30,17 +30,16 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
           nowPlaying: data[1],
         ));
       } on FetchDataError catch (e) {
-        printLog(
-            level: LogLevel.error, error: e, message: 'Home Screen Bloc: ');
+        printLog(level: LogLevel.error, error: e, message: 'Home Screen Bloc');
 
         emit(HomeScreenError(error: e));
       } catch (errr) {
         printLog(
-            level: LogLevel.error, error: errr, message: 'Home Screen Bloc: ');
+            level: LogLevel.error, error: errr, message: 'Home Screen Bloc');
 
         emit(
-          const HomeScreenError(
-            error: FetchDataError('Something went wrong'),
+          HomeScreenError(
+            error: FetchDataError(message: errr.toString()),
           ),
         );
       }

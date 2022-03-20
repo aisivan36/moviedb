@@ -9,7 +9,7 @@ class CastInfo {
     required this.image,
     required this.id,
   });
-  factory CastInfo.fromJson(json) {
+  factory CastInfo.fromJson(Map<String, dynamic> json) {
     return CastInfo(
       id: json['id'].toString(),
       name: json['name'] ?? '',

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_db/animation.dart';
 
 import 'package:movie_db/models/movies/movie_model.dart';
 import 'package:movie_db/models/tv_models/tv_model.dart';
 import 'package:movie_db/screens/home/bloc/home_screen_bloc.dart';
 import 'package:movie_db/widgets/error_screen.dart';
 import 'package:movie_db/widgets/header_text.dart';
+import 'package:movie_db/widgets/horizontal_list_cards.dart';
 import 'package:movie_db/widgets/movie_home.dart';
 
 class HomeSreen extends StatelessWidget {
@@ -28,7 +30,7 @@ class HomeSreen extends StatelessWidget {
             );
           } else if (state is HomeScreenError) {
             return ErrorScreen(
-              error: context.read<HomeScreenError>().error,
+              error: state.error,
             );
           } else if (state is HomeScreenLoading) {
             return const Scaffold(
@@ -68,7 +70,7 @@ class HomeScreenWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(85, 51, 47, 47),
+      backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       // extendBody: true,
       // extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
@@ -76,9 +78,39 @@ class HomeScreenWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             MoviePage(movies: tranding),
+            const DelayedDisplay(child: HeaderText(text: 'In Theaters')),
+            DelayedDisplay(
+              child: HorizontalListViewMovies(list: tranding),
+              delay: const Duration(microseconds: 800),
+            ),
+
             const SizedBox(height: 14),
-            const HeaderText(text: 'In Theaters'),
+
+            /// Horizontal List View TV
             const HeaderText(text: 'Tv Shows'),
+            HorizontalListViewTv(list: tvShows),
+            const SizedBox(height: 14),
+
+            ///  Horizontal List view Movie for TopRated
+            const HeaderText(text: 'Top Rated'),
+            HorizontalListViewMovies(list: topRated),
+            const SizedBox(height: 14),
+
+            /// Horizontal List View TVf forTop Rated Tv Shows
+            const HeaderText(text: 'Top Rated Tv Shows'),
+            HorizontalListViewTv(list: topShows),
+
+            const SizedBox(height: 14),
+
+            /// Horizontal List View Movies for Upcoming
+            const HeaderText(text: 'UpComming'),
+            HorizontalListViewMovies(list: upcoming),
+
+            const SizedBox(height: 14),
+
+            /// Horizontal List View Movies for Now Playing
+            const HeaderText(text: 'Now Playing'),
+            HorizontalListViewMovies(list: nowPlaying),
           ],
         ),
       ),

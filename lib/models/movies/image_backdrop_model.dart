@@ -3,7 +3,7 @@ class ImageBackdrop {
   ImageBackdrop({
     required this.image,
   });
-  factory ImageBackdrop.fromJson(json) {
+  factory ImageBackdrop.fromJson(Map<String, dynamic> json) {
     return ImageBackdrop(
       image: "https://image.tmdb.org/t/p/original" + json['file_path'],
     );
@@ -17,9 +17,9 @@ class ImageBackdropList {
     required this.backdrops,
   });
 
-  factory ImageBackdropList.fromJson(backdrops) {
+  factory ImageBackdropList.fromJson(List<dynamic> backdrops) {
     return ImageBackdropList(
-      backdrops: (backdrops as List)
+      backdrops: backdrops
           .map((backdrop) => ImageBackdrop.fromJson(backdrop))
           .toList(),
     );

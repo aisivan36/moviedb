@@ -104,11 +104,12 @@ class _DelayedDisplayState extends State<DelayedDisplay>
   }
 }
 
+/// Custom pushNewScreen
 void pushNewScreen(BuildContext context, Widget page) {
-  Navigator.push(context, createRoute(page));
+  Navigator.push(context, _createRoute(page));
 }
 
-Route createRoute(Widget page) {
+Route _createRoute(Widget page) {
   return PageRouteBuilder(
     transitionDuration: const Duration(microseconds: 800),
     pageBuilder: (context, animation, secondaryAnimation) {
