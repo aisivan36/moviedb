@@ -7,9 +7,10 @@ enum LogLevel {
   error,
 }
 
+/// [message] hints to make easier to debug
 ///
-/// Debug
-/// Level 0 Success, 1 Warning, 2 is Error Log
+/// [error] Log the event of something, is a Object?
+///
 void printLog(
     {String? message,
 
@@ -17,23 +18,25 @@ void printLog(
     required LogLevel level,
     String name = '',
     Object? error,
+
+    /// StackTrace?
     StackTrace? stackTrace}) {
   /// Logging
   switch (level) {
     case LogLevel.success:
-      return dev.log('\x1B[32m$message\x1B[0m',
+      return dev.log('\x1B[32m$message:\x1B[0m',
           name: name, error: error, stackTrace: stackTrace);
 
     case LogLevel.warning:
-      return dev.log('⚠️\x1B[33m$message\x1B[0m',
+      return dev.log('⚠️\x1B[33m$message:\x1B[0m',
           name: name, error: error, stackTrace: stackTrace);
 
     case LogLevel.error:
-      return dev.log('⚠️\x1B[31m$message\x1B[0m',
+      return dev.log('⚠️\x1B[31m$message:\x1B[0m',
           name: name, error: error, stackTrace: stackTrace);
 // if level null log success color
     default:
-      dev.log('\x1B[32m$message\x1B[0m',
+      dev.log('\x1B[32m$message:\x1B[0m',
           name: name, error: error, stackTrace: stackTrace);
   }
 }
