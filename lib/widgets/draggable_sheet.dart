@@ -50,7 +50,7 @@ class BottomInfoSheet extends StatelessWidget {
                     sigmaY: 100,
                   ),
                   child: ColoredBox(
-                    color: Colors.black87.withOpacity(0.7),
+                    color: Colors.black87.withOpacity(0.300),
                     child: ListView(
                       controller: controller,
                       children: children,
