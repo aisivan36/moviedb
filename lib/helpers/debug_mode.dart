@@ -24,15 +24,15 @@ void printLog(
   /// Logging
   switch (level) {
     case LogLevel.success:
-      return dev.log('\x1B[32m$message:\x1B[0m',
+      return dev.log('💯✔️ \x1B[32m$message:\x1B[0m',
           name: name, error: error, stackTrace: stackTrace);
 
     case LogLevel.warning:
-      return dev.log('⚠️\x1B[33m$message:\x1B[0m',
+      return dev.log('⚠️🚧 \x1B[33m$message:\x1B[0m',
           name: name, error: error, stackTrace: stackTrace);
 
     case LogLevel.error:
-      return dev.log('⚠️\x1B[31m$message:\x1B[0m',
+      return dev.log('❌☹ \x1B[31m$message:\x1B[0m',
           name: name, error: error, stackTrace: stackTrace);
 
     /// if level null log success color
