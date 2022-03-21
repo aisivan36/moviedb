@@ -10,7 +10,7 @@ class MovieInfoModel {
   final String poster;
   final int budget;
   final String tagline;
-  final double rateing;
+  final double rating;
   final String dateByMonth;
   final int runtime;
   final String homepage;
@@ -26,7 +26,7 @@ class MovieInfoModel {
     required this.poster,
     required this.budget,
     required this.tagline,
-    required this.rateing,
+    required this.rating,
     required this.dateByMonth,
     required this.runtime,
     required this.homepage,
@@ -64,7 +64,7 @@ class MovieInfoModel {
       poster: json['poster_path'] != null
           ? "https://image.tmdb.org/t/p/w500" + json['poster_path']
           : "https://images.pexels.com/photos/4089658/pexels-photo-4089658.jpeg?cs=srgb&dl=pexels-victoria-borodinova-4089658.jpg&fm=jpg",
-      rateing: json['vote_average'].toDouble() ?? 0.0,
+      rating: json['vote_average'].toDouble() ?? 0.0,
       runtime: json['runtime'],
       tagline: json['tagline'] ?? json['actors'] ?? '',
       tmdbId: json['id'].toString(),
