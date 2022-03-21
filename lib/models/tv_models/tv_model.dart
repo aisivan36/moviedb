@@ -29,6 +29,7 @@ class TvModel {
             "${monthgenrater(json['first_air_date'].split("-")[1])} ${json['first_air_date'].split("-")[2]}, ${json['first_air_date'].split("-")[0]}";
 
         // print('Second $string');
+        printLog(level: LogLevel.success, error: string, message: 'TV MODEL');
       } catch (e) {
         printLog(level: LogLevel.error, error: e, message: 'TV MODEL');
       }
