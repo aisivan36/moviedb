@@ -16,7 +16,8 @@ class BottomInfoSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
+    return ConstrainedBox(
+      constraints: const BoxConstraints.expand(),
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
@@ -25,13 +26,13 @@ class BottomInfoSheet extends StatelessWidget {
         child: DraggableScrollableSheet(
           initialChildSize: minSize == null ? 0.65 : minSize!,
           minChildSize: minSize == null ? 0.65 : minSize!,
-          maxChildSize: 0.88,
+          maxChildSize: 0.78,
           builder: (context, controller) {
-            return Container(
+            return DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+                  topLeft: Radius.elliptical(53, 85),
+                  topRight: Radius.circular(10),
                 ),
                 image: DecorationImage(
                   image: CachedNetworkImageProvider(backdrops),
@@ -41,8 +42,8 @@ class BottomInfoSheet extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+                  topLeft: Radius.elliptical(53, 55),
+                  topRight: Radius.circular(10),
                 ),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
