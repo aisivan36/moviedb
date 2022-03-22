@@ -71,12 +71,13 @@ class HomeScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-      // extendBody: true,
-      // extendBodyBehindAppBar: true,
+      extendBody: true,
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            /// Movie Card Sliding
             MoviePage(movies: tranding),
             const DelayedDisplay(child: HeaderText(text: 'In Theaters')),
             DelayedDisplay(
