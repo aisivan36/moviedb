@@ -16,8 +16,13 @@ import 'package:movie_db/models/movies/trailer_model.dart';
 import 'package:movie_db/screens/movie_detail_screen/bloc/movie_detail_bloc.dart';
 import 'package:movie_db/screens/movie_detail_screen/detail_widgets/create_icon.dart';
 import 'package:movie_db/widgets/appbar.dart';
+import 'package:movie_db/widgets/cast_list.dart';
 import 'package:movie_db/widgets/draggable_sheet.dart';
 import 'package:movie_db/widgets/error_screen.dart';
+import 'package:movie_db/widgets/like_button/like_button.dart';
+import 'package:movie_db/widgets/star_icon_widget.dart';
+import 'package:movie_db/widgets/trailer_widget.dart';
+import 'package:readmore/readmore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MovieDetailScreen extends StatelessWidget {
@@ -202,12 +207,13 @@ class MovieDetailScreenWidget extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                /// Bottom Image Draggable sheet widget
                 BottomInfoSheet(
                   backdrops: info.backdrops,
                   children: [
-                    Container(
+                    Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      color: Colors.white,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -232,34 +238,143 @@ class MovieDetailScreenWidget extends StatelessWidget {
                           Expanded(
                             flex: 2,
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 16.0),
+                              padding: const EdgeInsets.only(left: 13.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  RichText(
-                                    text: TextSpan(
+                                  DelayedDisplay(
+                                    delay: const Duration(microseconds: 700),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: info.title,
+                                            style:
+                                                heading.copyWith(fontSize: 22),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                ' (${info.releaseDate.split(',').join(',')})',
+                                            style: heading.copyWith(
+                                              color:
+                                                  Colors.white.withOpacity(0.8),
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  DelayedDisplay(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    delay: const Duration(microseconds: 700),
+                                    child: Text(
+                                      imdbInfo.genre,
+                                      style: normalText.copyWith(
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                                  DelayedDisplay(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Row(
                                       children: [
-                                        TextSpan(
-                                          text: info.title,
-                                          style: heading.copyWith(fontSize: 22),
+                                        IconTheme(
+                                          data: const IconThemeData(
+                                              color: Colors.amber, size: 20),
+                                          child: StarDisplay(
+                                            value:
+                                                (info.rating * 5 / 10).round(),
+                                          ),
                                         ),
-                                        TextSpan(
-                                          text:
-                                              ' (${info.releaseDate.split('-')[0]})',
-                                          style: heading.copyWith(
-                                            color: Colors.white,
-                                            fontSize: 18,
+                                        Text(
+                                          '  ${info.rating}/10',
+                                          style: normalText.copyWith(
+                                            color: Colors.amber,
+                                            letterSpacing: 1.2,
                                           ),
                                         ),
                                       ],
                                     ),
-                                  )
+                                  ),
+                                  DelayedDisplay(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    delay: const Duration(microseconds: 800),
+                                    child: LikeButton(
+                                      date: info.releaseDate,
+                                      id: info.tmdbId,
+                                      title: info.title,
+                                      rate: info.rating,
+                                      poster: info.poster,
+                                      type: 'MOVIE',
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ],
                       ),
+                    ),
+                    if (info.overview != '')
+                      Container(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            DelayedDisplay(
+                              delay: const Duration(microseconds: 800),
+                              child: Text(
+                                'OverView',
+                                style: heading.copyWith(color: Colors.white),
+                              ),
+                            ),
+                            DelayedDisplay(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: ReadMoreText(
+                                info.overview,
+                                trimLines: 6,
+                                colorClickableText: CupertinoColors.systemGrey,
+                                trimMode: TrimMode.Line,
+                                trimCollapsedText: 'More',
+                                trimExpandedText: 'Less',
+                                style: normalText.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                                moreStyle: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                lessStyle: const TextStyle(
+                                  fontSize: 13,
+                                  color: Color.fromARGB(255, 92, 184, 17),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (trailers.isNotEmpty)
+                      TrailerWidget(
+                        backdrop: info.backdrops,
+                        backdropsList: backdropList,
+                        trailers: trailers,
+                      ),
+                    // if (castList.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.all(14),
+                          child: Text(
+                            'Cast',
+                            style: heading.copyWith(color: Colors.white),
+                          ),
+                        ),
+                        CastList(castList: castList),
+                      ],
                     ),
                   ],
                 ),
