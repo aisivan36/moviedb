@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class DelayedDisplay extends StatefulWidget {
   const DelayedDisplay({
     Key? key,
+    this.padding,
     required this.child,
     this.delay = Duration.zero,
     this.fadingDuration = const Duration(milliseconds: 800),
@@ -14,6 +15,8 @@ class DelayedDisplay extends StatefulWidget {
   }) : super(key: key);
 
   final Widget child;
+
+  final EdgeInsetsGeometry? padding;
 
   final Duration delay;
 
@@ -95,12 +98,26 @@ class _DelayedDisplayState extends State<DelayedDisplay>
     super.dispose();
   }
 
+  Widget isPaddingnotNull() {
+    return Padding(
+      padding: widget.padding ?? const EdgeInsets.all(1.0),
+      child: SlideTransition(
+        position: slideAnimationOffset,
+        child: widget.child,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SlideTransition(
-      position: slideAnimationOffset,
-      child: widget.child,
-    );
+    if (widget.padding == null) {
+      return SlideTransition(
+        position: slideAnimationOffset,
+        child: widget.child,
+      );
+    } else {
+      return isPaddingnotNull();
+    }
   }
 }
 
