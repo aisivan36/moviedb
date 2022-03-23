@@ -29,7 +29,7 @@ class MovieInfoImdb {
     required this.plot,
     required this.production,
   });
-  factory MovieInfoImdb.fromJson(json) {
+  factory MovieInfoImdb.fromJson(Map<String, dynamic> json) {
     return MovieInfoImdb(
       actors: json['Actors'] ?? '',
       rated: json['Rated'] ?? '',

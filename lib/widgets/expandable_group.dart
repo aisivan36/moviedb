@@ -10,8 +10,9 @@ class ExpandableGroup extends StatefulWidget {
     this.headerBackgroundColor,
     this.headerEdgeInsets,
     this.items,
-  })  : assert(isExpanded != null, 'Must not be null'),
-        assert(header != null, 'Header must not be null'),
+  })  : assert(isExpanded != null, 'isExpanded must NOT be null'),
+        assert(header != null, 'Header must NOT be null'),
+        assert(items != null, 'Items must NOT be null'),
         super(key: key);
   final bool? isExpanded;
   final Widget? header;
@@ -44,27 +45,28 @@ class _ExpandableGroupState extends State<ExpandableGroup> {
 
     if (!widget.isExpanded!) {
       children.add(const Divider());
-    } else {
-      children.add(
-        ListTile(
-          contentPadding: widget.headerEdgeInsets ??
-              const EdgeInsets.only(left: 0.0, right: 16.0),
-          title: widget.header,
-          trailing: isExpanded
-              ? widget.expandedIcon ?? const Icon(Icons.keyboard_arrow_down)
-              : widget.collapsedIcon ??
-                  const Icon(
-                    Icons.keyboard_arrow_right,
-                  ),
-          onTap: () => updateExpandedState(!isExpanded),
-        ),
-      );
     }
+    children.add(
+      ListTile(
+        contentPadding: widget.headerEdgeInsets ??
+            const EdgeInsets.only(left: 0.0, right: 16.0),
+        title: widget.header,
+        trailing: isExpanded
+            ? widget.expandedIcon ?? const Icon(Icons.keyboard_arrow_down)
+            : widget.collapsedIcon ??
+                const Icon(
+                  Icons.keyboard_arrow_right,
+                ),
+        onTap: () => updateExpandedState(!isExpanded),
+      ),
+    );
 
     return Ink(
       color: widget.headerBackgroundColor ??
           Theme.of(context).appBarTheme.backgroundColor,
-      child: Column(children: children),
+      child: Container(
+          color: isExpanded ? const Color.fromARGB(255, 123, 122, 134) : null,
+          child: Column(children: [...children])),
     );
   }
 
