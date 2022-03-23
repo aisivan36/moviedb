@@ -21,7 +21,7 @@ void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   openHiveBox('Movies');
-  openHiveBox('Faorites');
+  openHiveBox('Favorites');
   openHiveBox('Tv');
 
   // Directory dir = await getApplicationDocumentsDirectory();
