@@ -64,9 +64,7 @@ class _ExpandableGroupState extends State<ExpandableGroup> {
     return Ink(
       color: widget.headerBackgroundColor ??
           Theme.of(context).appBarTheme.backgroundColor,
-      child: Container(
-          color: isExpanded ? const Color.fromARGB(255, 123, 122, 134) : null,
-          child: Column(children: [...children])),
+      child: Column(children: [...children]),
     );
   }
 
