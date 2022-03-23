@@ -51,14 +51,22 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         hoverColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        // scaffoldBackgroundColor: Colors.black, TODO using this
+        // scaffoldBackgroundColor: Colors.black,
         scaffoldBackgroundColor: const Color.fromARGB(123, 48, 53, 51),
         primarySwatch: Colors.blue,
         splashColor: Colors.transparent,
         primaryColor: Colors.cyanAccent,
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
-      // TODO builder
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          child: ScrollConfiguration(
+            behavior: NoGlowBehavior(),
+            child: child ?? const SizedBox(),
+          ),
+        );
+      },
       home: const BottomNavBar(),
     );
   }
