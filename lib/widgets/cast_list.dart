@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_db/constants/theme.dart';
 import 'package:movie_db/models/movies/cast_info_model.dart';
 
 class CastList extends StatelessWidget {
@@ -15,53 +16,79 @@ class CastList extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        children: castList
-            .map((data) {
-              if (data.image != '') {
-                return SizedBox(
-                  width: 10,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        // TODO CastInfo Screen
-                      },
-                      child: Tooltip(
-                        message: '${data.name} test',
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 250,
-                              width: 130,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.green[900],
-                                boxShadow: kElevationToShadow[8],
+        children: [
+          const SizedBox(height: 10),
+          for (var i = 0; i < castList.length; i++)
+            if (castList[i].image != '')
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    // TODO CastInfo Screen
+                  },
+                  child: Tooltip(
+                    message: '${castList[i].name} as ${castList[i].character}',
+                    child: Container(
+                      width: 130,
+                      constraints: const BoxConstraints(minHeight: 290),
+                      child: Column(
+                        children: [
+                          Container(
+                            // constraints: BoxConstraints.expand(height: 200),
+                            height: 200,
+                            width: 130,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.transparent,
+                              boxShadow: kElevationToShadow[8],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: CachedNetworkImage(
+                                imageUrl: castList[i].image,
+                                height: 250,
+                                width: 130,
                               ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: CachedNetworkImage(
-                                  imageUrl: data.image,
-                                  height: 250,
-                                  width: 130,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: SizedBox(
+                              width: 130,
+                              child: Text(
+                                castList[i].name,
+                                maxLines: 2,
+                                style: normalText.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w900,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 5),
+                          Expanded(
+                            child: SizedBox(
+                              width: 130,
+                              child: Text(
+                                castList[i].character,
+                                maxLines: 2,
+                                style: normalText.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                );
-              } else {
-                return const SizedBox(
-                  child: Text('Empty'),
-                );
-              }
-            })
-            .cast<Widget>()
-            .toList(),
+                ),
+              ),
+        ],
       ),
     );
   }
