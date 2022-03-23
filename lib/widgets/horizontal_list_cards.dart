@@ -79,10 +79,11 @@ class HorizontalListViewTv extends StatelessWidget {
         padding: const EdgeInsets.only(left: 7),
         children: [
           // const SizedBox(width: 7),
-          for (Widget i in movie())
-            SizedBox(
-              child: i,
-            ),
+          // for (Widget i in movie())
+          //   SizedBox(
+          //     child: i,
+          //   ),
+          ...movie(),
         ],
       ),
     );
