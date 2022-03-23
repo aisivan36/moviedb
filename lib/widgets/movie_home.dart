@@ -115,38 +115,39 @@ class _MoviePageState extends State<MoviePage> {
             width: widths,
             child: DelayedDisplay(
               delay: const Duration(microseconds: 800),
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  height: positionHeight,
-                  aspectRatio: 16 / 9,
-                  viewportFraction: 0.85,
-                  enlargeCenterPage: true,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      current = index;
-                    });
-                  },
-                ),
-                carouselController: carouselController,
-                items: widget.movies.map((movie) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return InkWell(
-                        onTap: () {
-                          pushNewScreen(
-                              context,
-                              MovieDetailScreen(
-                                backdrop: movie.backdrop,
-                                id: movie.id,
-                              ));
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
+              child: SizedBox(
+                height: 350,
+                width: 460,
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    // pageSnapping: true,
+                    // disableCenter: true,
+                    height: positionHeight,
+                    aspectRatio: 16 / 9,
+                    viewportFraction: 0.85,
+                    // enlargeCenterPage: true,
+                    // enlargeStrategy: CenterPageEnlargeStrategy.height,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        current = index;
+                      });
+                    },
+                  ),
+                  carouselController: carouselController,
+                  items: widget.movies.map((movie) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return InkWell(
+                          onTap: () {
+                            pushNewScreen(
+                                context,
+                                MovieDetailScreen(
+                                  backdrop: movie.backdrop,
+                                  id: movie.id,
+                                ));
+                          },
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            padding: const EdgeInsets.all(12.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -215,11 +216,11 @@ class _MoviePageState extends State<MoviePage> {
                               ],
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),
