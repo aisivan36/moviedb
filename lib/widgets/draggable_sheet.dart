@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class BottomInfoSheet extends StatelessWidget {
   const BottomInfoSheet({
     Key? key,
-    required this.children,
+    this.children = const <Widget>[],
     required this.backdrops,
     this.minSize,
   }) : super(key: key);
@@ -31,8 +31,8 @@ class BottomInfoSheet extends StatelessWidget {
             return DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.elliptical(53, 85),
-                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
                 ),
                 image: DecorationImage(
                   image: CachedNetworkImageProvider(backdrops),
@@ -42,8 +42,8 @@ class BottomInfoSheet extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.elliptical(53, 55),
-                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
                 ),
                 child: BackdropFilter(
                   filter: ImageFilter.blur(
