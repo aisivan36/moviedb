@@ -72,7 +72,9 @@ class _GenreResultsState extends State<GenreResults> {
                     currentPage = value;
                   });
                   if (value == 1) {
-                    context.read<GenreResultCubit>().initTv(widget.query);
+                    if (state.shows.isEmpty) {
+                      context.read<GenreResultCubit>().initTv(widget.query);
+                    }
                   }
                 },
                 controller: pageController,
@@ -124,7 +126,7 @@ class _GenreResultsState extends State<GenreResults> {
                                 ),
                               ),
                             ),
-                  state.tvStatus != TvStatus.loaded
+                  state.tvStatus != TvStatus.loading
                       ? ListView(
                           controller: tvController,
                           children: [
@@ -167,26 +169,27 @@ class _GenreResultsState extends State<GenreResults> {
                 ],
               ),
               Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(137, 54, 48, 48),
-                        border: Border(
-                            bottom: BorderSide(
-                                color: Colors.grey[900]!, width: 0.6))),
-                    child: SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10.0),
-                            Row(children: [
+                top: 0,
+                left: 0,
+                right: 0,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 26, 25, 25),
+                      border: Border(
+                          bottom: BorderSide(
+                              color: Colors.grey[900]!, width: 0.6))),
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 10.0),
+                          Row(
+                            children: [
                               InkWell(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
+                                child: const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 16.0),
                                   child: Icon(
                                     CupertinoIcons.back,
                                     color: Colors.white,
@@ -195,12 +198,86 @@ class _GenreResultsState extends State<GenreResults> {
                                 ),
                                 onTap: () => Navigator.pop(context),
                               ),
-                            ]),
-                          ],
-                        ),
+                              Text(
+                                widget.query,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                ...buttons.map(
+                                  (data) => Container(
+                                    // padding: const EdgeInsets.only(left: 10),
+                                    margin: const EdgeInsets.only(left: 10),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color:
+                                            currentPage == buttons.indexOf(data)
+                                                ? Theme.of(context).primaryColor
+                                                : Colors.grey[700]!,
+                                        width: 0.6,
+                                      ),
+                                      color:
+                                          currentPage == buttons.indexOf(data)
+                                              ? Colors.cyanAccent
+                                              : Colors.transparent,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: InkWell(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 14.0, vertical: 4.0),
+                                        child: Text(
+                                          data,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: currentPage ==
+                                                    buttons.indexOf(data)
+                                                ? Colors.blueAccent
+                                                : Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          currentPage = buttons.indexOf(data);
+                                        });
+
+                                        pageController.animateToPage(
+                                          currentPage,
+                                          duration: const Duration(
+                                              microseconds: 1000),
+                                          curve: Curves.bounceInOut,
+                                        );
+                                        if (currentPage == 1) {
+                                          if (state.shows.isEmpty) {
+                                            context
+                                                .read<GenreResultCubit>()
+                                                .initTv(widget.query);
+                                          }
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ))
+                  ),
+                ),
+              ),
             ],
           );
         },
