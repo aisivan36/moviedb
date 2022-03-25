@@ -27,7 +27,7 @@ class Seasons {
     void getString() {
       try {
         string =
-            "premiered on ${monthgenrater(json['air_date'].split("-")[1])} ${json['air_date'].split("-")[2]}, ${json['air_date'].split("-")[0]}";
+            "premiered on ${monthgenrater(json['air_date']?.split("-")[1])} ${json['air_date']?.split("-")[2]}, ${json['air_date']?.split("-")[0]}";
       } catch (e) {
         printLog(level: LogLevel.error, error: e, message: 'Season TV MODEL: ');
       }
