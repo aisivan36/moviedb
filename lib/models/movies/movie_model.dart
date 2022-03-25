@@ -25,8 +25,8 @@ class MovieModel {
         string =
             "${monthgenrater(json['release_date'].split("-")[1])} ${json['release_date'].split("-")[2]}, ${json['release_date'].split("-")[0]}";
 
-        printLog(
-            level: LogLevel.success, message: 'Movie Model', error: string);
+        // printLog(
+        //     level: LogLevel.success, message: 'Movie Model', error: string);
       } catch (e) {
         printLog(message: 'Movie Model:', error: e, level: LogLevel.error);
       }
