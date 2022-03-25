@@ -19,6 +19,8 @@ import 'package:movie_db/widgets/appbar.dart';
 import 'package:movie_db/widgets/cast_list.dart';
 import 'package:movie_db/widgets/draggable_sheet.dart';
 import 'package:movie_db/widgets/error_screen.dart';
+import 'package:movie_db/widgets/expandable_group.dart';
+import 'package:movie_db/widgets/horizontal_list_cards.dart';
 import 'package:movie_db/widgets/like_button/like_button.dart';
 import 'package:movie_db/widgets/star_icon_widget.dart';
 import 'package:movie_db/widgets/trailer_widget.dart';
@@ -376,6 +378,166 @@ class MovieDetailScreenWidget extends StatelessWidget {
                         CastList(castList: castList),
                       ],
                     ),
+                    ExpandableGroup(
+                      isExpanded: true,
+                      expandedIcon: Icon(
+                        Icons.arrow_drop_up,
+                        color: Colors.white != Colors.white
+                            ? Colors.black
+                            : Colors.white,
+                      ),
+                      header: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                        child: Text(
+                          'About Movie',
+                          style: heading.copyWith(color: Colors.white),
+                        ),
+                      ),
+                      collapsedIcon: Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white != Colors.white
+                            ? Colors.black
+                            : Colors.white,
+                      ),
+                      items: [
+                        ListTile(
+                          title: Text(
+                            'Runtime',
+                            style: heading.copyWith(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          subtitle: Text(
+                            imdbInfo.runtime,
+                            style: normalText.copyWith(color: Colors.white),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            'Writers',
+                            style: heading.copyWith(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          subtitle: Text(
+                            imdbInfo.writer,
+                            style: normalText.copyWith(color: Colors.white),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            'Director',
+                            style: heading.copyWith(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          subtitle: Text(
+                            imdbInfo.director,
+                            style: normalText.copyWith(color: Colors.white),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            'Released on/Releasing on',
+                            style: heading.copyWith(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                          subtitle: Text(
+                            imdbInfo.released,
+                            style: normalText.copyWith(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    /// Second Widget
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12.0),
+                      child: ExpandableGroup(
+                        isExpanded: false,
+                        expandedIcon: Icon(
+                          Icons.arrow_drop_up,
+                          color: Colors.white != Colors.white
+                              ? Colors.black
+                              : Colors.black,
+                        ),
+                        collapsedIcon: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.white != Colors.white
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                        header: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                          child: Text(
+                            'Movie on BoxOffice',
+                            style: heading.copyWith(color: Colors.white),
+                          ),
+                        ),
+                        items: [
+                          ListTile(
+                            title: Text(
+                              'Rated',
+                              style: heading.copyWith(
+                                  color: Colors.white, fontSize: 16),
+                            ),
+                            subtitle: Text(
+                              imdbInfo.rated,
+                              style: normalText.copyWith(color: Colors.white),
+                            ),
+                          ),
+                          ListTile(
+                            title: Text(
+                              'Budget',
+                              style: heading.copyWith(
+                                  color: Colors.white, fontSize: 16),
+                            ),
+                            subtitle: Text(
+                              kmbGenerator(info.budget) == '0'
+                                  ? 'N/A'
+                                  : kmbGenerator(info.budget),
+                              style: normalText.copyWith(color: Colors.white),
+                            ),
+                          ),
+                          ListTile(
+                            title: Text(
+                              'BoxOffice',
+                              style: heading.copyWith(
+                                  color: Colors.white, fontSize: 16),
+                            ),
+                            subtitle: Text(
+                              imdbInfo.boxOffice,
+                              style: normalText.copyWith(color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    /// Similar Widget screen
+                    if (similar.isNotEmpty)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Text(
+                              'You might also like',
+                              style: heading.copyWith(color: Colors.white),
+                            ),
+                          ),
+
+                          /// Horizontal List Movie screen widget
+                          HorizontalListViewMovies(
+                              list: similar, color: Colors.white)
+                        ],
+                      ),
                   ],
                 ),
               ],
@@ -384,5 +546,19 @@ class MovieDetailScreenWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+String kmbGenerator(num num) {
+  if (num > 999 && num < 99999) {
+    return "${(num / 1000).toStringAsFixed(1)} K";
+  } else if (num > 99999 && num < 999999) {
+    return "${(num / 1000).toStringAsFixed(0)} K";
+  } else if (num > 999999 && num < 999999999) {
+    return "${(num / 1000000).toStringAsFixed(1)} M";
+  } else if (num > 999999999) {
+    return "${(num / 1000000000).toStringAsFixed(1)} B";
+  } else {
+    return num.toString();
   }
 }
