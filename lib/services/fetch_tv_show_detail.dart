@@ -42,23 +42,24 @@ class FetchTvShowDetail {
 
         throw FetchDataError.set('Something went worng!');
       }
-
-      info = TvInfoModel.fromJson(tv['data']);
-      trailerList = TrailerList.fromJson(tv['videos']);
-      images.addAll(tv['images']['backdrops']);
-      images.addAll(tv['images']['posters']);
-      images.addAll(tv['images']['logos']);
-
-      backdropList = ImageBackdropList.fromJson(images);
-      castInfoList = CastInfoList.fromJson(tv['credits']);
-      similarShows = TvModelList.fromJson(tv['similar']['results']);
-      return [
-        info,
-        trailerList.trailers,
-        backdropList.backdrops,
-        castInfoList.castList,
-        similarShows.movies,
-      ];
     }
+
+    info = TvInfoModel.fromJson(tv['data']);
+    trailerList = TrailerList.fromJson(tv['videos']);
+    images.addAll(tv['images']['backdrops']);
+    images.addAll(tv['images']['posters']);
+    images.addAll(tv['images']['logos']);
+
+    backdropList = ImageBackdropList.fromJson(images);
+    castInfoList = CastInfoList.fromJson(tv['credits']);
+    similarShows = TvModelList.fromJson(tv['similar']['results']);
+
+    return [
+      info,
+      trailerList.trailers,
+      backdropList.backdrops,
+      castInfoList.castList,
+      similarShows.movies,
+    ];
   }
 }
