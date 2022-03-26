@@ -4,6 +4,7 @@ import 'package:movie_db/animation.dart';
 
 import 'package:movie_db/constants/theme.dart';
 import 'package:movie_db/screens/movie_detail_screen/movie_detail_screen.dart';
+import 'package:movie_db/screens/tvshow_detail_screen/tvshow_detail_screen.dart';
 import 'package:movie_db/widgets/star_icon_widget.dart';
 
 class MovieCard extends StatelessWidget {
@@ -123,8 +124,10 @@ class HorizontalMovieCard extends StatelessWidget {
               MovieDetailScreen(backdrop: backdrop, id: id),
             );
           } else {
-            //  TODO TV Show Detail Screen
-            // pushNewScreen(context,TvShowDeta)
+            pushNewScreen(
+              context,
+              TvShowDetailScreen(id: id, backdrop: backdrop),
+            );
             Scaffold(
               appBar: AppBar(
                 title: const Text('TODO Tv Show Detail Screen'),
