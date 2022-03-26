@@ -25,9 +25,16 @@ class ErrorScreen extends StatelessWidget {
               const Text('Something went wrong!'),
               const SizedBox(height: 130),
               const Text('Hints'),
-              Text(error?.message ?? 'No Hints',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                error?.message.toLowerCase() == 'empty' ||
+                        error?.message != null
+                    ? 'No Hints'
+                    : error!.message,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ),
