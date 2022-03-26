@@ -90,7 +90,7 @@ class TrailerWidget extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return const SizedBox(
+                  return const SizedBox.shrink(
                     child: Text('Empty'),
                   );
                 }
