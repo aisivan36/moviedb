@@ -11,7 +11,7 @@ class TvInfoModel {
   final String backdrops;
   final String poster;
   final String tagline;
-  final double rateing;
+  final double rating;
   final String homepage;
   final List genres;
   final List<Seasons> seasons;
@@ -29,7 +29,7 @@ class TvInfoModel {
     required this.backdrops,
     required this.poster,
     required this.tagline,
-    required this.rateing,
+    required this.rating,
     required this.homepage,
     required this.genres,
     required this.seasons,
@@ -66,7 +66,7 @@ class TvInfoModel {
       poster: json['poster_path'] != null
           ? "https://image.tmdb.org/t/p/w500" + json['poster_path']
           : "https://images.pexels.com/photos/4089658/pexels-photo-4089658.jpeg?cs=srgb&dl=pexels-victoria-borodinova-4089658.jpg&fm=jpg",
-      rateing: json['vote_average'].toDouble() ?? 0.0,
+      rating: json['vote_average'].toDouble() ?? 0.0,
       tagline: json['tagline'] ?? '',
       tmdbId: json['id'].toString(),
       numberOfSeasons: json['number_of_seasons'].toString(),
