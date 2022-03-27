@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_db/animation.dart';
 import 'package:movie_db/constants/theme.dart';
 import 'package:movie_db/models/tv_models/season_tvmodel.dart';
 import 'package:movie_db/models/tv_models/tvinfo_model.dart';
+import 'package:movie_db/screens/season_detail_screen/bloc/season_detail_bloc.dart';
+import 'package:movie_db/screens/season_detail_screen/season_detail_screen.dart';
 import 'package:readmore/readmore.dart';
 
 class SeasonsWidget extends StatelessWidget {
@@ -21,7 +25,17 @@ class SeasonsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        //  TODO Seasons Detail BLoc
+        pushNewScreen(
+          context,
+          BlocProvider<SeasonDetailBloc>(
+            create: (context) => SeasonDetailBloc(),
+            child: SeasonDetailScreen(
+              backdrop: season.image,
+              id: info.tmdbId,
+              snum: season.snum,
+            ),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(12.0),

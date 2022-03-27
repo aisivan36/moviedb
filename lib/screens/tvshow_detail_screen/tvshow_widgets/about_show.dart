@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_db/constants/theme.dart';
 import 'package:movie_db/models/tv_models/tvinfo_model.dart';
