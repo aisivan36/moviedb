@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/gestures.dart';
 import 'package:movie_db/models/error_model.dart';
 import 'package:movie_db/models/movies/cast_info_model.dart';
 import 'package:movie_db/models/movies/image_backdrop_model.dart';
