@@ -1,7 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_db/animation.dart';
 import 'package:movie_db/constants/theme.dart';
 import 'package:movie_db/models/movies/cast_info_model.dart';
+import 'package:movie_db/screens/cast_info_screen/bloc/cast_info_bloc.dart';
+import 'package:movie_db/screens/cast_info_screen/cast_info_screen.dart';
 
 class CastList extends StatelessWidget {
   const CastList({Key? key, required this.castList}) : super(key: key);
@@ -25,7 +29,16 @@ class CastList extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                 child: GestureDetector(
                   onTap: () {
-                    // TODO CastInfo Screen
+                    pushNewScreen(
+                      context,
+                      BlocProvider<CastInfoBloc>(
+                        create: (context) => CastInfoBloc(),
+                        child: CastInfoScreen(
+                          backdrop: castList[i].image,
+                          id: castList[i].id,
+                        ),
+                      ),
+                    );
                   },
                   child: Tooltip(
                     message: '${castList[i].name} as ${castList[i].character}',
