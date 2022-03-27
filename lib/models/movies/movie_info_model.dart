@@ -34,12 +34,14 @@ class MovieInfoModel {
     required this.genres,
     required this.releaseDate,
   });
-  factory MovieInfoModel.fromJson(Map<String, dynamic> json) {
+  factory MovieInfoModel.fromJson(json) {
     String string = "";
     void getString() {
       try {
-        string =
-            "${monthgenrater(json['release_date'].split("-")[1])} ${json['release_date'].split("-")[2]}, ${json['release_date'].split("-")[0]}";
+        if (json != null && json?['release_date'].isNotEmpty) {
+          string =
+              "${monthgenrater(json['release_date']?.split("-")[1])} ${json['release_date']?.split("-")[2]}, ${json['release_date']?.split("-")[0]}";
+        }
         // ignore: empty_catches
       } catch (e) {
         printLog(
@@ -48,28 +50,50 @@ class MovieInfoModel {
     }
 
     getString();
-    return MovieInfoModel(
-      budget: json['budget'],
-      title: json['title'] ?? '',
-      homepage: json['homepage'] ?? "",
-      imdbid: json['imdb_id'] ?? "",
-      languages: (json['spoken_languages'] as List)
-          .map((laung) => laung['english_name'])
-          .toList(),
-      genres: (json['genres'] as List).map((laung) => laung['name']).toList(),
-      overview: json['overview'] ?? json['actors'] ?? '',
-      backdrops: json['backdrop_path'] != null
-          ? "https://image.tmdb.org/t/p/original" + json['backdrop_path']
-          : "https://images.pexels.com/photos/4089658/pexels-photo-4089658.jpeg?cs=srgb&dl=pexels-victoria-borodinova-4089658.jpg&fm=jpg",
-      poster: json['poster_path'] != null
-          ? "https://image.tmdb.org/t/p/w500" + json['poster_path']
-          : "https://images.pexels.com/photos/4089658/pexels-photo-4089658.jpeg?cs=srgb&dl=pexels-victoria-borodinova-4089658.jpg&fm=jpg",
-      rating: json['vote_average'].toDouble() ?? 0.0,
-      runtime: json['runtime'],
-      tagline: json['tagline'] ?? json['actors'] ?? '',
-      tmdbId: json['id'].toString(),
-      releaseDate: json['release_date'] ?? '',
-      dateByMonth: string,
-    );
+    if (json != null) {
+      return MovieInfoModel(
+        budget: json != null ? json['budget'] : 00,
+        title: json != null ? json['title'] : '',
+        homepage: json != null ? json['homepage'] : "",
+        imdbid: json != null ? json['imdb_id'] : "",
+        languages: json != null
+            ? (json['spoken_languages'] as List)
+                .map((laung) => laung['english_name'])
+                .toList()
+            : [],
+        genres: (json['genres'] as List).map((laung) => laung['name']).toList(),
+        overview: json['overview'] ?? json['actors'] ?? '',
+        backdrops: json['backdrop_path'] != null
+            ? "https://image.tmdb.org/t/p/original" + json['backdrop_path']
+            : "https://images.pexels.com/photos/4089658/pexels-photo-4089658.jpeg?cs=srgb&dl=pexels-victoria-borodinova-4089658.jpg&fm=jpg",
+        poster: json['poster_path'] != null
+            ? "https://image.tmdb.org/t/p/w500" + json['poster_path']
+            : "https://images.pexels.com/photos/4089658/pexels-photo-4089658.jpeg?cs=srgb&dl=pexels-victoria-borodinova-4089658.jpg&fm=jpg",
+        rating: json['vote_average'].toDouble() ?? 0.0,
+        runtime: json['runtime'],
+        tagline: json['tagline'] ?? json['actors'] ?? '',
+        tmdbId: json['id'].toString(),
+        releaseDate: json['release_date'] ?? '',
+        dateByMonth: string,
+      );
+    } else {
+      return MovieInfoModel(
+        tmdbId: '',
+        overview: '',
+        title: '',
+        languages: [],
+        backdrops: '',
+        poster: '',
+        budget: 00,
+        tagline: '',
+        rating: 0.0,
+        dateByMonth: '',
+        runtime: 00,
+        homepage: '',
+        imdbid: '',
+        genres: [],
+        releaseDate: '',
+      );
+    }
   }
 }

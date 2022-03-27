@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_db/constants/api.dart';
+import 'package:movie_db/helpers/debug_mode.dart';
 import 'package:movie_db/models/movies/cast_info_model.dart';
 import 'package:movie_db/models/movies/image_backdrop_model.dart';
 import 'package:movie_db/models/movies/movie_info_imdb_model.dart';
@@ -23,7 +24,8 @@ class FetchMovieDataById {
     List<dynamic> images = [];
     Box box = Hive.box('Movies');
     String string = jsonEncode(box.get(id));
-    Map<String, dynamic>? movie = jsonDecode(string);
+    var movie = jsonDecode(string);
+    // Map<String, dynamic>? movie = jsonDecode(string);
 
     /// Check is movie is null then gain new object from it
     if (movie == null) {
@@ -46,12 +48,17 @@ class FetchMovieDataById {
 
     similarData = MovieModelList.fromJson(movie?['similar']['results']);
 
-    String imdbId = movieData.imdbid;
+    var imdbId = movieData.imdbid;
     final omdbResponse =
-        await http.get(Uri.parse('$baseURL/movie/omdb/' + imdbId));
+        await http.get(Uri.parse('$baseURL/movie/omdb/' + imdbId.toString()));
 
-    if (omdbResponse.statusCode == 200) {
-      omdbData = MovieInfoImdb.fromJson(jsonDecode(omdbResponse.body)['data']);
+    try {
+      if (omdbResponse.statusCode == 200) {
+        omdbData =
+            MovieInfoImdb.fromJson(jsonDecode(omdbResponse.body)['data']);
+      }
+    } catch (err) {
+      printLog(level: LogLevel.error, message: 'FetchMovie Data y', error: err);
     }
 
     return [

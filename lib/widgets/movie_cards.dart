@@ -92,6 +92,7 @@ class MovieCard extends StatelessWidget {
 
 /// Horizontal Movie Card
 class HorizontalMovieCard extends StatelessWidget {
+  /// Whether it is movie false or true
   const HorizontalMovieCard({
     Key? key,
     required this.poster,
@@ -110,6 +111,8 @@ class HorizontalMovieCard extends StatelessWidget {
   final double rate;
   final String id;
   final Color color;
+
+  /// Whether it is movie false or true
   final bool isMovie;
 
   @override

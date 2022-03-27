@@ -63,7 +63,7 @@ class TrailerWidget extends StatelessWidget {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: CachedNetworkImage(
-                                      imageUrl: backdrop.isNotEmpty
+                                      imageUrl: backdropsList.isNotEmpty
                                           ? backdropsList[0].image
                                           : backdrop,
                                       height: 120,

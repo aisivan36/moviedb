@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_db/animation.dart';
 import 'package:movie_db/constants/theme.dart';
 import 'package:movie_db/models/genre_model.dart';
+import 'package:movie_db/screens/search_screen/results/cubit/search_results_cubit.dart';
+import 'package:movie_db/screens/search_screen/results/search_result.dart';
 import 'package:movie_db/screens/search_screen/search_widgets/genre_tile.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -60,8 +62,14 @@ class SearchScreen extends StatelessWidget {
                 ),
                 onSubmitted: (String query) {
                   if (query.isNotEmpty) {
-                    // pushNewScreen(context,BlocProvider(create: create))
-                    // TODO SearchResultCubit and Search Results Page
+                    /// Search Results Widget
+                    pushNewScreen(
+                      context,
+                      BlocProvider<SearchResultsCubit>(
+                        create: (context) => SearchResultsCubit()..init(query),
+                        child: SearchResults(query: query),
+                      ),
+                    );
                   }
                 },
               ),

@@ -26,8 +26,10 @@ class TrailerList {
   });
   factory TrailerList.fromJson(json) {
     return TrailerList(
-        trailers: (json['results'] as List)
-            .map((trailer) => TrailerModel.fromJson(trailer))
-            .toList());
+        trailers: json != null
+            ? (json['results'] as List)
+                .map((trailer) => TrailerModel.fromJson(trailer))
+                .toList()
+            : []);
   }
 }

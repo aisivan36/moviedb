@@ -26,7 +26,7 @@ class CastInfoList {
   CastInfoList({
     required this.castList,
   });
-  factory CastInfoList.fromJson(Map<String, dynamic> json) {
+  factory CastInfoList.fromJson(json) {
     return CastInfoList(
       castList: ((json['cast'] ?? []) as List)
           .map((cast) => CastInfo.fromJson(cast))

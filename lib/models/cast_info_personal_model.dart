@@ -44,10 +44,15 @@ class CastPersonalInfo {
 
     dynamic string = 'Not Available';
     try {
-      string =
-          "${monthgenrater(json['birthday'].split("-")[1])} ${json['birthday'].split("-")[2]}, ${json['birthday'].split("-")[0]}";
+      if (json['birthday']?.isNotEmpty) {
+        string =
+            "${monthgenrater(json['birthday']?.split("-")[1])} ${json['birthday']?.split("-")[2]}, ${json['birthday']?.split("-")[0]}";
+      }
     } catch (e) {
-      printLog(message: 'Cast Info Model: ', error: e, level: LogLevel.error);
+      printLog(
+          message: 'Cast Info Personal Model: ',
+          error: e,
+          level: LogLevel.error);
     }
 
     return CastPersonalInfo(
