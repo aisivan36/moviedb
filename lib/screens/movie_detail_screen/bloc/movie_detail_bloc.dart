@@ -44,7 +44,7 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       } catch (err) {
         printLog(
             level: LogLevel.error, message: 'Bloc Movie Detail 2', error: err);
-        emit(MovieDatailError(error: FetchDataError(message: err.toString())));
+        emit(MovieDatailError(error: FetchDataError.set(err.toString())));
       }
     }
   }
