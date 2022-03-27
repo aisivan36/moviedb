@@ -21,6 +21,7 @@ import 'package:movie_db/widgets/draggable_sheet.dart';
 import 'package:movie_db/widgets/error_screen.dart';
 import 'package:movie_db/widgets/expandable_group.dart';
 import 'package:movie_db/widgets/horizontal_list_cards.dart';
+import 'package:movie_db/widgets/image_view.dart';
 import 'package:movie_db/widgets/like_button/like_button.dart';
 import 'package:movie_db/widgets/star_icon_widget.dart';
 import 'package:movie_db/widgets/trailer_widget.dart';
@@ -109,7 +110,13 @@ class MovieDetailScreenWidget extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    // TODO View Photo
+                    pushNewScreen(
+                      context,
+                      ViewPhotos(
+                          color: Theme.of(context).primaryColor,
+                          imageIndex: 0,
+                          imageList: backdropList),
+                    );
                   },
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height * (1 - 0.63),
