@@ -4,6 +4,7 @@ import 'package:movie_db/animation.dart';
 import 'package:movie_db/constants/theme.dart';
 import 'package:movie_db/models/movies/image_backdrop_model.dart';
 import 'package:movie_db/models/movies/trailer_model.dart';
+import 'package:movie_db/widgets/video_player.dart';
 
 class TrailerWidget extends StatelessWidget {
   const TrailerWidget({
@@ -40,7 +41,12 @@ class TrailerWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: GestureDetector(
                       onTap: () {
-                        // TODO VideoPlayer
+                        //
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => VideoPlayer(id: data.key),
+                          ),
+                        );
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
