@@ -22,9 +22,10 @@ class MovieModel {
     String string = "Not Available";
     void getString() {
       try {
-        string =
-            "${monthgenrater(json['release_date'].split("-")[1])} ${json['release_date'].split("-")[2]}, ${json['release_date'].split("-")[0]}";
-
+        if (json['release_date'].isNotEmpty) {
+          string =
+              "${monthgenrater(json['release_date']?.split("-")[1])} ${json['release_date']?.split("-")[2]}, ${json['release_date']?.split("-")[0]}";
+        }
         // printLog(
         //     level: LogLevel.success, message: 'Movie Model', error: string);
       } catch (e) {
