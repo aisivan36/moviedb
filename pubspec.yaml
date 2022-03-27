@@ -50,7 +50,7 @@ dependencies:
   carousel_slider: ^4.0.0
   youtube_player_flutter:
     git:
-      url: https://github.com/anshrathod-blog/youtube_player_flutter
+      url: https://github.com/aisivan36/youtube_player_flutter.git
   # carousel_slider:
   #   git:
   #     url: https://github.com/aisivan36/flutter_carousel_slider.git
