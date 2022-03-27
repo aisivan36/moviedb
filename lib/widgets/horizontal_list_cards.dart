@@ -83,14 +83,14 @@ class HorizontalListViewTv extends StatelessWidget {
           //   SizedBox(
           //     child: i,
           //   ),
-          ...movie(),
+          ...movie(context),
         ],
       ),
     );
   }
 
   /// Movie Card
-  List<Widget> movie() {
+  List<Widget> movie(BuildContext context) {
     return list.map((dataMovie) {
       return MovieCard(
         poster: dataMovie.poster,
@@ -101,7 +101,10 @@ class HorizontalListViewTv extends StatelessWidget {
         color: color == null ? Colors.white : color!,
         isMovie: true,
         onTap: () {
-          // TODO PushNewScreen to MovieDetailsScreen
+          pushNewScreen(
+            context,
+            MovieDetailScreen(backdrop: dataMovie.backdrop, id: dataMovie.id),
+          );
         },
       );
     }).toList();
