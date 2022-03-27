@@ -22,6 +22,7 @@ import 'package:movie_db/widgets/cast_list.dart';
 import 'package:movie_db/widgets/draggable_sheet.dart';
 import 'package:movie_db/widgets/error_screen.dart';
 import 'package:movie_db/widgets/horizontal_list_cards.dart';
+import 'package:movie_db/widgets/image_view.dart';
 import 'package:movie_db/widgets/star_icon_widget.dart';
 import 'package:movie_db/widgets/trailer_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -114,7 +115,14 @@ class TvInfoScrollableWidget extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    // TODO ViewPhoto
+                    pushNewScreen(
+                      context,
+                      ViewPhotos(
+                        color: Colors.white,
+                        imageIndex: 0,
+                        imageList: backdropsList,
+                      ),
+                    );
                   },
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height * (1 - 0.63),
