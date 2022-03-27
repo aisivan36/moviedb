@@ -105,7 +105,6 @@ class MovieDetailScreenWidget extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: 30, sigmaY: 50),
           child: Container(
             color: Colors.black.withOpacity(0.5),
-            // TODO may wrap within Stack again
             child: Stack(
               children: [
                 InkWell(
