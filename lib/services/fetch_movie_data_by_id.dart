@@ -4,6 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_db/constants/api.dart';
 import 'package:movie_db/helpers/debug_mode.dart';
+import 'package:movie_db/models/error_model.dart';
 import 'package:movie_db/models/movies/cast_info_model.dart';
 import 'package:movie_db/models/movies/image_backdrop_model.dart';
 import 'package:movie_db/models/movies/movie_info_imdb_model.dart';
@@ -15,7 +16,7 @@ class FetchMovieDataById {
   ///
   Future<List<dynamic>> getDetails(String id) async {
     MovieInfoModel movieData;
-    MovieInfoImdb? omdbData;
+    MovieInfoImdb omdbData;
     TrailerList trailerData;
     ImageBackdropList backdropDataList;
     CastInfoList castData;
@@ -33,6 +34,8 @@ class FetchMovieDataById {
       if (response.statusCode == 200) {
         movie = jsonDecode(response.body);
         await box.put(id, jsonDecode(response.body));
+      } else {
+        throw FetchDataError.set('Something went wrong');
       }
     }
 
@@ -52,14 +55,13 @@ class FetchMovieDataById {
     final omdbResponse =
         await http.get(Uri.parse('$baseURL/movie/omdb/' + imdbId.toString()));
 
-    try {
-      if (omdbResponse.statusCode == 200) {
-        omdbData =
-            MovieInfoImdb.fromJson(jsonDecode(omdbResponse.body)['data']);
-      }
-    } catch (err) {
-      printLog(level: LogLevel.error, message: 'FetchMovie Data y', error: err);
-    }
+    // try {
+    // if (omdbResponse.statusCode == 200) {
+    omdbData = MovieInfoImdb.fromJson(jsonDecode(omdbResponse.body)?['data']);
+    // }
+    // } catch (err) {
+    //   printLog(level: LogLevel.error, message: 'FetchMovie Data y', error: err);
+    // }
 
     return [
       movieData,
